@@ -1,0 +1,106 @@
+import java.util.*;
+
+class Student {
+    private int studentId;
+    private String name;
+    private double feesPaid;
+    private double totalFees;
+
+    public Student(int studentId, String name, double totalFees) {
+        this.studentId = studentId;
+        this.name = name;
+        this.totalFees = totalFees;
+        this.feesPaid = 0;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getFeesPaid() {
+        return feesPaid;
+    }
+
+    public double getTotalFees() {
+        return totalFees;
+    }
+
+    public void payFees(double amount) {
+        feesPaid += amount;
+    }
+
+    public double getRemainingFees() {
+        return totalFees - feesPaid;
+    }
+
+    @Override
+    public String toString() {
+        return "Student ID: " + studentId + "\nName: " + name + "\nTotal Fees: $" + totalFees +
+               "\nFees Paid: $" + feesPaid + "\nRemaining Fees: $" + getRemainingFees();
+    }
+}
+
+class FeesManagementSystem {
+    private List<Student> students;
+
+    public FeesManagementSystem() {
+        students = new ArrayList<>();
+    }
+
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    public Student findStudent(int studentId) {
+        for (Student student : students) {
+            if (student.getStudentId() == studentId) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public void payFees(int studentId, double amount) {
+        Student student = findStudent(studentId);
+        if (student != null) {
+            student.payFees(amount);
+            System.out.println("Fees paid successfully!");
+        } else {
+            System.out.println("Student not found.");
+        }
+    }
+
+    public void displayStudentDetails(int studentId) {
+        Student student = findStudent(studentId);
+        if (student != null) {
+            System.out.println(student);
+        } else {
+            System.out.println("Student not found.");
+        }
+    }
+
+    public static void main(String[] args) {
+        FeesManagementSystem system = new FeesManagementSystem();
+
+        Student student1 = new Student(1, "John Doe", 1000);
+        Student student2 = new Student(2, "Jane Smith", 1500);
+
+        system.addStudent(student1);
+        system.addStudent(student2);
+
+        system.displayStudentDetails(1);
+        System.out.println("\n");
+
+        system.payFees(1, 500);
+        system.displayStudentDetails(1);
+    }
+}
+
+
+
+
+
